@@ -1,6 +1,0 @@
-SECRET_KEY = 'django-insecure-9q#wo3nftrvfzss+!2si)91e6m_#d)+c3ccxz-nnzt-x=#jp+%'
-DATABASE_NAME = 'HotelDB'
-DATABASE_USER = 'postgres'
-DATABASE_PASSWORD = 'juanp1997'
-DATABASE_HOST = '127.0.0.1'
-DATABASE_PORT = '5432'
