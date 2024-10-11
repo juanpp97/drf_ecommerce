@@ -1,2 +1,5 @@
-# drf_ecommerce
-E-commerce website using Django Rest Framework
+# Ecommerce with Django Rest Framework
+
+### Team Members
+* Juan Pablo Peñaloza: https://portfolio-jpp.netlify.app/
+* Gabriel Etchegoyen: https://gabyetche-portfolio.netlify.app/
