@@ -18,7 +18,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    description = models.TextField()
+    description = models.TextField(blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.IntegerField(blank = True, default=0)
     category = models.ForeignKey('Category', on_delete=models.SET_DEFAULT, default=Category.get_default(), null=True, blank=True, related_name='product')

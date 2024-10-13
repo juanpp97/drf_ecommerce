@@ -1,0 +1,72 @@
+[
+    {
+      "name": "iPhone 13",
+      "description": "Apple's latest smartphone with A15 chip",
+      "price": 799,
+      "stock": 500,
+      "category": "Electronics"
+    },
+    {
+      "name": "Samsung Galaxy S21",
+      "description": "Samsung's flagship smartphone with Exynos 2100",
+      "price": 699,
+      "stock": 300,
+      "category": "Electronics"
+    },
+    {
+      "name": "Sony WH-1000XM4",
+      "description": "Industry-leading noise-canceling headphones",
+      "price": 349,
+      "stock": 200,
+      "category": "Audio"
+    },
+    {
+      "name": "Dell XPS 13",
+      "description": "High-performance laptop with 13-inch display",
+      "price": 999,
+      "stock": 150,
+      "category": "Computers"
+    },
+    {
+      "name": "Nike Air Max 270",
+      "description": "Stylish and comfortable Nike sneakers",
+      "price": 150,
+      "stock": 100,
+      "category": "Footwear"
+    },
+    {
+      "name": "Adidas Ultraboost 21",
+      "description": "High-performance running shoes by Adidas",
+      "price": 180,
+      "stock": 80,
+      "category": "Footwear"
+    },
+    {
+      "name": "Canon EOS R5",
+      "description": "Professional mirrorless camera with 45MP sensor",
+      "price": 3899,
+      "stock": 50,
+      "category": "Cameras"
+    },
+    {
+      "name": "GoPro HERO9",
+      "description": "Versatile action camera with 5K video recording",
+      "price": 399,
+      "stock": 100,
+      "category": "Cameras"
+    },
+    {
+      "name": "Samsung 55-inch QLED TV",
+      "description": "Stunning 4K QLED TV with Quantum Dot technology",
+      "price": 1299,
+      "stock": 70,
+      "category": "Televisions"
+    },
+    {
+      "name": "LG 65-inch OLED TV",
+      "description": "Premium 4K OLED TV with perfect black levels",
+      "price": 2499,
+      "stock": 30,
+      "category": "Televisions"
+    }
+  ]

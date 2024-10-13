@@ -22,15 +22,6 @@ key_errors = {
     'incorrect_type': 'Tipo de dato incorrecto',
 }
 
-class CategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Category
-        fields = ['id', 'name']
-        extra_kwargs = {
-            'name': {
-                'error_messages': default_errors
-            }
-        }
 
 
 class ImageSerializer(serializers.ModelSerializer):
@@ -80,8 +71,29 @@ class ProductSerializer(serializers.ModelSerializer):
         representation = super().to_representation(instance)
         representation['category'] = instance.category.name
         representation['discount'] = f'{instance.discount.discount * 100}%'
+        return representation
         
         
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ['id', 'name']
+        extra_kwargs = {
+            'name': {
+                'error_messages': default_errors
+            }
+        }
+    def to_representation(self, instance):
+        representation =  super().to_representation(instance)
+        representation['product'] = [{'name': product.name,
+                                      'description': product.description,
+                                      'price': product.price,
+                                      'stock': product.stock,
+                                      } for product in instance.product.all()]
+        
+
+
 
 
         
