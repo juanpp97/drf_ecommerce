@@ -14,6 +14,10 @@ class Category(models.Model):
         
     class Meta:
         verbose_name_plural = 'Categories'
+
+    def __str__(self):
+        return self.name
+        
         
 
 class Product(models.Model):
@@ -23,12 +27,15 @@ class Product(models.Model):
     stock = models.IntegerField(blank = True, default=0)
     category = models.ForeignKey('Category', on_delete=models.SET_DEFAULT, default=Category.get_default(), null=True, blank=True, related_name='product')
     discount = models.ForeignKey('Discount', on_delete=models.SET_NULL, null=True, blank=True, related_name='product_discount')
-    active = models.BooleanField()
+    active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def delete(self):
         self.active = False
+
+    def __str__(self) -> str:
+        return f"{self.name} - ${self.price}"
         
 class Images(models.Model):
     path = models.ImageField(upload_to = 'products')
