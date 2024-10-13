@@ -25,14 +25,14 @@ class Product(models.Model):
     discount = models.ForeignKey('Discount', on_delete=models.SET_NULL, null=True, blank=True, related_name='product_discount')
     active = models.BooleanField()
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def delete(self):
         self.active = False
         
 class Images(models.Model):
     path = models.ImageField(upload_to = 'products')
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='image_product')
     
     def delete(self):
         self.path.storage.delete(self.path.name)
