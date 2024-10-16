@@ -31,8 +31,9 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def delete(self):
+    def soft_delete(self):
         self.active = False
+        self.save()
 
     def __str__(self) -> str:
         return f"{self.name} - ${self.price}"
@@ -109,5 +110,5 @@ class CartItem(models.Model):
 
 
     def save(self, *args, **kwargs):
-        self.subtotal = self.quantity * self.product.price
+        self.subtotal = self.quantity * self.product.price * (1 -  self.product.discount.discount)
         return super().save(*args, **kwargs)

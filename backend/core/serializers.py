@@ -32,7 +32,6 @@ class ImageSerializer(serializers.ModelSerializer):
         fields = ['path']
 
 
-
 class ProductSerializer(serializers.ModelSerializer):
     images = ImageSerializer(many = False, allow_null = True)
     class Meta:
@@ -53,6 +52,8 @@ class ProductSerializer(serializers.ModelSerializer):
             },
             'category': {
                 'error_messages': {**default_errors, **key_errors},
+                'required': True,
+                'allow_null': False,
             },
             'discount': {
                 'error_messages': {**default_errors, **key_errors},

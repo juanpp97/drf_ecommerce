@@ -1,12 +1,14 @@
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 from .models import Product, Category, Cart, CartItem, Order, OrderItem, Images, Discount, Coupon, ShippingAddress
 from .serializers import ProductSerializer, ImageSerializer, CategorySerializer
 
 
 class ProductListView(ListCreateAPIView):
     http_method_names = ['get', 'post']
-    queryset = Product.objects.prefetch_related('image_product', 'category', 'discount')
+    queryset = Product.objects.filter(active = True).prefetch_related('image_product', 'category', 'discount')
     serializer_class = ProductSerializer
     
 
@@ -14,6 +16,11 @@ class ProductDetailView(RetrieveUpdateDestroyAPIView):
     http_method_names = ['get', 'post', 'put', 'patch', 'delete']
     queryset = Product.objects.all().prefetch_related('image_product', 'category', 'discount')
     serializer_class = ProductSerializer
+    
+    def destroy(self, request, *args, **kwargs):
+        product = self.get_object()
+        product.soft_delete()
+        return Response("Producto borrado correctamente", status=status.HTTP_204_NO_CONTENT)
 
 
 class CategoryListView(ListCreateAPIView):
