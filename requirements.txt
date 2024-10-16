@@ -5,4 +5,5 @@ django-countries
 Pillow==10.1.0
 psycopg2==2.9.7
 python-decouple==3.8
+django-cors-headers==4.5.0
 

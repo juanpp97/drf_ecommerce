@@ -22,21 +22,29 @@ key_errors = {
     'incorrect_type': 'Tipo de dato incorrecto',
 }
 
+image_errors = {
+    'invalid_image': 'El archivo no es válido',
+    'empty': 'El archivo no puede estar en blanco',
+    'no_name': 'El archivo no tiene nombre',
+}
 
-
-class ImageSerializer(serializers.ModelSerializer):
-    path = serializers.ImageField(use_url = True, allow_empty_file = False, required = True)
-    
+class ImageSerializer(serializers.ModelSerializer):   
     class Meta:
         model = Images
         fields = ['path']
+    def to_representation(self, instance):
+        return self.context['request'].get_absolute_uri(instance.path.url)
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    images = ImageSerializer(many = False, allow_null = True)
+    image = ImageSerializer(many = True, read_only=True)
+    uploaded = serializers.ListField(
+        child = serializers.ImageField(use_url = True, allow_empty_file = False, error_messages = {**default_errors, **image_errors}),
+        write_only = True
+    )
     class Meta:
         model = Product
-        fields = ['id', 'name', 'description', 'price', 'images', 'stock', 'category', 'discount', 'created_at', 'updated_at']
+        fields = ['id', 'name', 'description', 'price', 'image','uploaded',  'stock', 'category', 'discount', 'created_at', 'updated_at']
         extra_kwargs = {
             'name': {
                 'error_messages': default_errors,
@@ -70,10 +78,11 @@ class ProductSerializer(serializers.ModelSerializer):
         
             
     def create(self, validated_data):
-        image = validated_data.pop('images', None)
+        images = validated_data.pop('uploaded', [])
         product = Product.objects.create(**validated_data)
-        if image:
-            Images.objects.create(path=image['path'], product=product)
+        if images:
+            for image in images:
+                Images.objects.create(path=image, product=product)
         return product
     
         
@@ -99,7 +108,6 @@ class ProductSerializer(serializers.ModelSerializer):
     
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-        representation['images'] = [image.path.url for image in instance.image_product.all()]
         representation['category'] = instance.category.name
         representation['discount'] = f'{instance.discount.discount * 100 + "%" if instance.discount else ""}'
         return representation
