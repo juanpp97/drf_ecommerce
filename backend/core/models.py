@@ -33,13 +33,14 @@ class Product(models.Model):
 
     def delete(self):
         self.active = False
+        
 
     def __str__(self) -> str:
         return f"{self.name} - ${self.price}"
         
 class Images(models.Model):
     path = models.ImageField(upload_to = 'products')
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='image_product')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='image')
     
     def delete(self):
         self.path.storage.delete(self.path.name)
