@@ -33,7 +33,7 @@ class ImageSerializer(serializers.ModelSerializer):
         model = Images
         fields = ['path']
     def to_representation(self, instance):
-        return self.context['request'].get_absolute_uri(instance.path.url)
+        return self.context['request'].build_absolute_uri(instance.path.url)
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -86,31 +86,35 @@ class ProductSerializer(serializers.ModelSerializer):
         return product
     
         
-    # def update(self, instance, validated_data):
-    #     image_data = validated_data.pop('images', None)  
+    def update(self, product, validated_data):
+        '''
+            Esta implementación solo añade imagenes a las ya existentes.
+        '''
+        image_data = validated_data.pop('uploaded', [])  
 
-    #     instance.name = validated_data.get('name', instance.name)
-    #     instance.description = validated_data.get('description', instance.description)
-    #     instance.price = validated_data.get('price', instance.price)
-    #     instance.stock = validated_data.get('stock', instance.stock)
-    #     instance.category = validated_data.get('category', instance.category)
-    #     instance.discount = validated_data.get('discount', instance.discount)
-    #     instance.save()
+        product.name = validated_data.get('name', product.name)
+        product.description = validated_data.get('description', product.description)
+        product.price = validated_data.get('price', product.price)
+        product.stock = validated_data.get('stock', product.stock)
+        product.category = validated_data.get('category', product.category)
+        product.discount = validated_data.get('discount', product.discount)
+        product.save()
 
-    #     if image_data:
-    #         if instance.images:
-    #             instance.images.path = image_data['path']
-    #             instance.images.save()
-    #     else:
-    #         Images.objects.create(path=image_data['path'], product=instance)
+        if image_data:
+            for image in image_data:
+                Images.objects.create(path=image, product=product)
 
-    #     return instance
+        return product
     
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         representation['category'] = instance.category.name
-        representation['discount'] = f'{instance.discount.discount * 100 + "%" if instance.discount else ""}'
+        if instance.discount:
+            representation['discount'] = instance.discount.discount * 100 + "%"
+        else:
+            representation.pop('discount')
         return representation
+
         
         
 
