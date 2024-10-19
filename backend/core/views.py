@@ -3,12 +3,12 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Product, Category, Cart, CartItem, Order, OrderItem, Images, Discount, Coupon, ShippingAddress
-from .serializers import ProductSerializer, ImageSerializer, CategorySerializer
+from .serializers import ProductSerializer, ImageSerializer, CategorySerializer, ShippingAddressSerializer
 
 
 class ProductListView(ListCreateAPIView):
     http_method_names = ['get', 'post']
-    queryset = Product.objects.filter(active = True).prefetch_related('image', 'category', 'discount')
+    queryset = Product.objects.prefetch_related('image', 'category', 'discount')
     serializer_class = ProductSerializer
     
 
@@ -16,6 +16,8 @@ class ProductDetailView(RetrieveUpdateDestroyAPIView):
     http_method_names = ['get', 'post', 'put', 'patch', 'delete']
     queryset = Product.objects.prefetch_related('image', 'category', 'discount')
     serializer_class = ProductSerializer
+    
+    
     
     def destroy(self, request, *args, **kwargs):
         product = self.get_object()
@@ -32,3 +34,15 @@ class CategoryDetailView(RetrieveUpdateDestroyAPIView):
     http_method_names = ['get', 'post', 'put', 'patch', 'delete']
     queryset = Category.objects.prefetch_related('product')
     serializer_class = CategorySerializer    
+    
+    
+class ShippingAddressListView(ListCreateAPIView):
+    http_method_names = ['get', 'post']
+    queryset = ShippingAddress.objects.prefetch_related('user')
+    serializer_class = ShippingAddressSerializer
+    
+    
+class ShippingAddressDetailView(RetrieveUpdateDestroyAPIView):
+    http_method_names = ['get', 'post', 'put', 'patch', 'delete']
+    queryset = ShippingAddress.objects.prefetch_related('user')
+    serializer_class = ShippingAddressSerializer

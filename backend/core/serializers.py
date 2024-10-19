@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Product, Category, Cart, CartItem, Order, OrderItem, Images, Discount, Coupon, ShippingAddress
+from django_countries.serializer_fields import CountryField
 
 default_errors = {
     'required': 'El campo es obligatorio',
@@ -61,7 +62,7 @@ class ProductSerializer(serializers.ModelSerializer):
             },
             'category': {
                 'error_messages': {**default_errors, **key_errors},
-                'required': True,
+                'required': False,
                 'allow_null': False,
             },
             'discount': {
@@ -135,10 +136,21 @@ class CategorySerializer(serializers.ModelSerializer):
                                       'price': product.price,
                                       'stock': product.stock,
                                       } for product in instance.product.all()]
+        return representation
         
 
 
+class ShippingAddressSerializer(serializers.ModelSerializer):
+    country = CountryField()
 
+    class Meta:
+        model = ShippingAddress
+        fields = ['user', 'address', 'country', 'city', 'zip_code']
+    
 
-        
+    def to_representation(self, instance):
+        representation =  super().to_representation(instance)
+        representation['user'] = instance.user.username
+        representation['country'] = instance.country.name
+        return representation   
 
