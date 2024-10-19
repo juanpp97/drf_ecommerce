@@ -61,7 +61,7 @@ class ProductSerializer(serializers.ModelSerializer):
             },
             'category': {
                 'error_messages': {**default_errors, **key_errors},
-                'required': True,
+                'required': False,
                 'allow_null': False,
             },
             'discount': {
