@@ -40,7 +40,8 @@ class ProductSerializer(serializers.ModelSerializer):
     image = ImageSerializer(many = True, read_only=True)
     uploaded = serializers.ListField(
         child = serializers.ImageField(use_url = True, allow_empty_file = False, error_messages = {**default_errors, **image_errors}),
-        write_only = True
+        write_only = True,
+        required = False
     )
     class Meta:
         model = Product
