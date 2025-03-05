@@ -1,5 +1,16 @@
+import Products_cards from "@/components/ProductsCards"
 export default function Catalogo() {
   return (
-    <div>Catalogo</div>
+    <>
+      <Products_cards/>
+        
+        
+        
+        
+        
+        
+        
+        
+    </>
   )
 }
