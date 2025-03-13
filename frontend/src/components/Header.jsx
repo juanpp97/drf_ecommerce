@@ -50,7 +50,7 @@ c-98 -1 -151 -5 -183 -16z"/>
               <NavLink to="/">Inicio</NavLink>
             </li>
             <li className="p-4 border-b-2 border-green-500 border-opacity-0 hover:border-opacity-100 hover:text-green-500 duration-200 cursor-pointer">
-              <NavLink to="/">Catálogo</NavLink>
+              <NavLink to="/catalogo">Catálogo</NavLink>
             </li>
             <li className="p-4 border-b-2 border-green-500 border-opacity-0 hover:border-opacity-100 hover:text-green-500 duration-200 cursor-pointer">
               <NavLink to="/">Ofertas</NavLink>

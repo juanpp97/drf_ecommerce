@@ -1,13 +1,20 @@
-import Products_cards from "@/components/ProductsCards"
+import Footer from "@/components/Footer"
+import Header from "@/components/Header"
+import Products_cards2 from "@/components/ProductsCards2"
+import SectionHeadingProducts from "@/components/SectionHeadingProducts"
 export default function Catalogo() {
   return (
     <>
-      <Products_cards/>
+    <Header/>
+    <SectionHeadingProducts/>
+
+      <Products_cards2/>
+      
         
         
         
         
-        
+     <Footer/>   
         
         
         
